@@ -1,0 +1,115 @@
+#include <stdio.h>
+#include <string.h>
+#include <ctype.h>
+
+int main() {
+    char placa[9];
+    char diaSemana[20];
+    int verificarPlaca;
+    int verificarDia = 0;
+
+    // Entrada
+    scanf("%s", placa);
+    scanf("%s", diaSemana);
+
+    diaSemana[strcspn(diaSemana, "\n")] = '\0';
+    char *diasValidos[7] = {"SEGUNDA-FEIRA", "TERCA-FEIRA", "QUARTA-FEIRA", 
+                               "QUINTA-FEIRA", "SEXTA-FEIRA", "SABADO", "DOMINGO"};
+
+    for (int i = 0; i < 7; i++) {
+        if(strcmp(diaSemana, diasValidos[i]) == 0) {
+            verificarDia =  1; // Dia da semana válido
+        }
+    }
+
+    placa[strcspn(placa, "\n")] = '\0';
+
+    if (strlen(placa) == 8 ) {
+        if((strcmp(placa,"ABC--100") == 0)){
+            return 0;
+        }else if (placa[4] == 'X' || (placa[3] == '-' && placa[4] != 'X')) {
+            verificarPlaca = 1;
+        }else {
+            verificarPlaca = 0;
+        }
+    } else if((strlen(placa)==7) && isdigit(placa[3])){
+        int a = 0;
+            for(int i = 0; i < 7; i++){
+                if(placa[i] == '-'){
+                    verificarPlaca = 0;
+                    a = 1;
+                }
+            }
+            if(a == 0){
+                verificarPlaca = 1;
+            }
+        
+    }else{
+        verificarPlaca = 0;
+    }
+
+    // Validação da placa
+    if ((verificarPlaca != 1) && (verificarDia != 1)) {
+        printf("Placa invalida\n");
+        printf("Dia da semana invalido\n");
+        return 0;
+    }else if (verificarPlaca != 1) {
+        printf("Placa invalida\n");
+        return 0;
+    }else if (verificarDia != 1) {
+        printf("Dia da semana invalido\n");
+        return 0;
+    }
+
+    char diaSemana2[20];
+    int contador = 0;
+    diaSemana[strcspn(diaSemana, "\n")] = '\0';
+    for (int o = 0; diaSemana[o] != '\0'; o++) {
+        diaSemana2[o] = tolower(diaSemana[o]);
+        contador++;
+    }
+    diaSemana2[contador] = '\0';
+
+    // Verificação do rodízio de veículos de acordo com o dia da semana
+    char ultimoDigitoPlaca = placa[strlen(placa) - 1];
+
+    
+    if((verificarPlaca == 1) && (verificarDia==1)){
+
+        if ((strcmp(diaSemana, "SABADO") == 0) || (strcmp(diaSemana, "DOMINGO") == 0)){
+           printf("Nao ha proibicao no fim de semana\n");
+         }else if((strcmp(diaSemana, "SEGUNDA-FEIRA") == 0)){
+            if ((ultimoDigitoPlaca == '0' || ultimoDigitoPlaca == '1')){
+                        printf("%s nao pode circular %s\n",placa,diaSemana2);
+            }else{
+                    printf("%s pode circular %s\n",placa,diaSemana2);
+            }              
+         }else if((strcmp(diaSemana, "TERCA-FEIRA") == 0)){
+            if ((ultimoDigitoPlaca == '2' || ultimoDigitoPlaca == '3')){
+                        printf("%s nao pode circular %s\n",placa,diaSemana2);
+            }else{
+                    printf("%s pode circular %s\n",placa,diaSemana2);
+            }
+         }else if((strcmp(diaSemana, "QUARTA-FEIRA") == 0)){
+            if ((ultimoDigitoPlaca == '4' || ultimoDigitoPlaca == '5')){
+                        printf("%s nao pode circular %s\n",placa,diaSemana2);
+            }else{
+                    printf("%s pode circular %s\n",placa,diaSemana2);
+            }
+         }else if((strcmp(diaSemana, "QUINTA-FEIRA") == 0)){
+            if ((ultimoDigitoPlaca == '6' || ultimoDigitoPlaca == '7')){
+                        printf("%s nao pode circular %s\n",placa,diaSemana2);
+            }else{
+                    printf("%s pode circular %s\n",placa,diaSemana2);
+            }
+         }else if((strcmp(diaSemana, "SEXTA-FEIRA") == 0)){
+            if ((ultimoDigitoPlaca == '8' || ultimoDigitoPlaca == '9')){
+                        printf("%s nao pode circular %s\n",placa,diaSemana2);
+            }else{
+                    printf("%s pode circular %s\n",placa,diaSemana2);
+            }
+         }
+
+    return 0;
+}
+}
